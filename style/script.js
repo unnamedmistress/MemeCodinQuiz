@@ -1,16 +1,39 @@
 
-
-
-
 const question = document.getElementById('question');
-const img = document.getElementById('imgDemo');
+const src = document.getElementById('imgDemo');
 const a = document.getElementById('a+');
 const b = document.getElementById('b+');
 const c = document.getElementById('c+');
 const d = document.getElementById('d+');
 const btn = document.getElementById('submit');
 const all_answer = document.querySelectorAll('.answer');
-var QIndex = 0;
+const quiz = document.getElementById('quiz');
+const start = document.getElementById('start');
+let QIndex = 0;
+//uncomment this line to ensure question are hidden at the start
+quiz.textContent = ``;
+//quiz.setAttribute("data-state", "hidden")
+var timerEl = document.getElementById('countdown');
+var mainEl = document.getElementById('main');
+
+function startCountDown() {
+let timeLeft = 120;
+let timeInterval = setInterval(function () {
+    if (timeLeft > 0) {
+        timerEl.textContent = timeLeft + ' remaining';
+        timeLeft--; 
+        startQuiz(QIndex)
+    }
+    else {
+        timerEl.textContent = 'Time is up';
+        clearInterval(timeInterval);
+    }
+}, 1000);
+}
+start.addEventListener("click", startCountDown);
+
+
+
 
 const quizData = [
     {
@@ -100,31 +123,26 @@ const quizData = [
         d: 'dum',
         correct: 'b',
     },
-  ];
+ ];
+startQuiz = (i) =>{
+   //quizData to go into the element some how
+   //quizData[] = Qindex?
+for (var i = 0; i = QIndex.length; i++) {
+  question.innerText = quizData[index].question;
+    a.innerText = quizData[index].a;
+    b.innerText = quizData[index].b;
+    c.innerText = quizData[index].c;
 
-start = (i) => {
-qDiv.textContent = questions[i].a
-// loop over the questions[i].answers
-// append these to the answers div
-}
-
-start(QIndex)
-// write questions 
-// append to html 
-// create timer on click
-//add score
-//add question answers 
-
+    //loop over the answers
+    //append
+ }}
 
 
-
-
-
-
-
-
-
-
-
-
-
+ //create start Timer - 60 seconds
+// if statements to know if answer is right
+ //Create counter for score and append to score at the top
+ //Create end Quiz function
+// Request name
+// create High Scores page with list of scores and names
+//link to HighScores at the 'end quiz' function
+//Create function to ask to play again
