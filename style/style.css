@@ -27,13 +27,17 @@ main {
     border-radius: 5px;
     padding: 3rem;
     background-color: white;
-    color: rgb(5, 52, 161);
+    color: rgb(71, 79, 100);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    
   }
-  ol{
+  ol,li.answer{
+    margin: 1%;
+    padding: 0;
     list-style: none;
-    margin-right:55%;
+    display: flex;
+    flex-direction: column;
+
   }
   button {
     padding: 0.5rem;

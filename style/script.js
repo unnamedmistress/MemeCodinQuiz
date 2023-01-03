@@ -9,10 +9,8 @@ const btn = document.getElementById('submit');
 const all_answer = document.querySelectorAll('.answer');
 const quiz = document.getElementById('quiz');
 const start = document.getElementById('start');
-let QIndex = 0;
-//uncomment this line to ensure question are hidden at the start
-quiz.textContent = ``;
-//quiz.setAttribute("data-state", "hidden")
+
+btn.hidden = true;
 var timerEl = document.getElementById('countdown');
 var mainEl = document.getElementById('main');
 
@@ -22,7 +20,6 @@ let timeInterval = setInterval(function () {
     if (timeLeft > 0) {
         timerEl.textContent = timeLeft + ' remaining';
         timeLeft--; 
-        startQuiz(QIndex)
     }
     else {
         timerEl.textContent = 'Time is up';
@@ -30,14 +27,12 @@ let timeInterval = setInterval(function () {
     }
 }, 1000);
 }
-start.addEventListener("click", startCountDown);
-
-
-
+start.addEventListener('click', function () {
+    startCountDown();})
 
 const quizData = [
     {
-      src: "/array.png",  
+      src: ("./array.png"),  
       question: 'How do you sort an Array?',
       a: 'By pressing the sort button in the tool bar',
       b: 'sort();',
@@ -124,23 +119,25 @@ const quizData = [
         correct: 'b',
     },
  ];
-startQuiz = (i) =>{
-   //quizData to go into the element some how
-   //quizData[] = Qindex?
-for (var i = 0; i = QIndex.length; i++) {
-  question.innerText = quizData[index].question;
-    a.innerText = quizData[index].a;
-    b.innerText = quizData[index].b;
-    c.innerText = quizData[index].c;
 
-    //loop over the answers
-    //append
- }}
+let QIndex = 0;
+
+function startQuiz () {
+ question.innerHTML = quizData[i].question;
+   imgDemo.innerHTML = quizData[i].src;
+   a.innerHTML = quizData[i].a;
+   b.innerHTML = quizData[i].b;
+   c.innerHTML = quizData[i].c;
+    d.innerHTML = quizData[i].d;
+    QIndex++;
+    btn.hidden = false;
+}
+start.onclick= startQuiz;
+quizData.foreach(startQuiz)
 
 
- //create start Timer - 60 seconds
 // if statements to know if answer is right
- //Create counter for score and append to score at the top
+ //Create counter for score and append to score at the top of page
  //Create end Quiz function
 // Request name
 // create High Scores page with list of scores and names
