@@ -6,20 +6,21 @@ let countOfQuestion = document.querySelector(".number-of-question");
 let displayContainer = document.getElementById("display-container");
 let scoreContainer = document.querySelector(".score-container");
 let restart = document.getElementById("restart");
+let restar = document.getElementById("restar");
 let userScore = document.getElementById("user-score");
 let startScreen = document.querySelector(".start-screen");
 let startButton = document.getElementById("start-button");
-let questionCount;
+let QIndex;
 let scoreCount = 0;
-let count = 11;
+let count = 6;
 let countdown;
-const quizArray = [
+const quizData = [
     {
       id:"0",  
       src: "style/img/array.png",  
       question: 'How do you sort an Array?',
       options:['By pressing the sort button in the tool bar','sort()','Just use filter instead','Math.min.apply(null, [1, 2, 3])'],
-      correct: 'sort();',
+      correct: 'sort()',
     },
     {
         id:"1", 
@@ -30,13 +31,13 @@ const quizArray = [
     },
     {
         id:"2",
-        src: "style/img/closing",  
-        question: 'Which tag does NOT need a closing tag',
-        options:[ '<li>','<HTML>','<br>','<p>'],
-        correct: '<li>',
+        src: "style/img/closing.png",  
+        question:'Which tag does NOT need a closing tag',
+        options:['li','HTML','br','p'],
+        correct: 'br',
     },
     {   id:"3",
-        src: "style/img/float",  
+        src: "style/img/float.png",  
         question: 'What is a common problem with using Float in CSS?',
         options:[ 'Float only works on an absolute or fixed position','You do not have any life boats if your floatation devise fails','The siblings of that Float will be unaffected','A common problem with float-based layouts is that the floats container does not want to stretch up to accommodate the floats'],
         correct: 'A common problem with float-based layouts is that the floats container does not want to stretch up to accommodate the floats',
@@ -44,7 +45,7 @@ const quizArray = [
     {   id:"4",
         src: "style/img/function.png",  
         question: 'There is only one way to write a Function',
-        options: ['True','False'],
+        options: ['True','False', 'Null'],
         correct: 'False',
     },
     {   id:"5",
@@ -58,36 +59,44 @@ const quizArray = [
         question: 'How many times will Barney get kicked out of Moes?',
        options:['Whenever Moe gets tired','When Barney runs out of money','When the criteria is met, somehow','Indefinitely, the loop will go on forever'],
         correct: 'Indefinitely, the loop will go on forever',
-    },
+    }
    
  ];
  
-//Restart Quiz
+
+//Restart 
 restart.addEventListener("click", () => {
     initial();
     displayContainer.classList.remove("hide");
     scoreContainer.classList.add("hide");
   });
+  function openHighScores(){
+    window.location="/HighScores.html";
+    window.location.href = "/HighScores.html";
+
+}
   //Next Button
   nextBtn.addEventListener(
     "click",
     (displayNext = () => {
-      //increment questionCount
-      questionCount += 1;
+      //increment QIndex
+      QIndex += 1;
       //if last question
-      if (questionCount == quizArray.length) {
+      if (QIndex == quizData.length) {
         //hide question container and display score
+        openHighScores();
         displayContainer.classList.add("hide");
         scoreContainer.classList.remove("hide");
+        
         //user score
         userScore.innerHTML =
-          "Your score is " + scoreCount + " out of " + questionCount;
+          "Your score is " + scoreCount + " out of " + QIndex;
       } else {
-        //display questionCount
+        //display QIndex
         countOfQuestion.innerHTML =
-          questionCount + 1 + " of " + quizArray.length + " Question";
+          QIndex + 1 + " of " + quizData.length + " Question";
         //display quiz
-        quizDisplay(questionCount);
+        quizDisplay(QIndex);
         count = 11;
         clearInterval(countdown);
         timerDisplay();
@@ -106,34 +115,39 @@ const timerDisplay = () => {
     }, 1000);
   };
   //Display quiz
-  const quizDisplay = (questionCount) => {
+  const quizDisplay = (QIndex) => {
     let quizCards = document.querySelectorAll(".container-mid");
     //Hide other cards
     quizCards.forEach((card) => {
       card.classList.add("hide");
     });
     //display current question card
-    quizCards[questionCount].classList.remove("hide");
+    quizCards[QIndex].classList.remove("hide");
   };
   //Quiz Creation
   function quizCreator() {
     //randomly sort questions
-    quizArray.sort(() => Math.random() - 0.5);
+    quizData.sort(() => Math.random() - 0.5);
     //generate quiz
-    for (let i of quizArray) {
+    for (let i of quizData) {
       //randomly sort options
       i.options.sort(() => Math.random() - 0.5);
       //quiz card creation
       let div = document.createElement("div");
       div.classList.add("container-mid", "hide");
       //question number
-      countOfQuestion.innerHTML = 1 + " of " + quizArray.length + " Question";
+      countOfQuestion.innerHTML = 1 + " of " + quizData.length + " Question";
       //question
-      let question_DIV = document.createElement("p");
+      let question_DIV = document.createElement("h2");
       question_DIV.classList.add("question");
       question_DIV.innerHTML = i.question;
-      question_DIV.innerHTML = `<img src=${i.src} alt="picture" width = "200px" height="200px" />`;
       div.appendChild(question_DIV);
+//img
+      let imgDiv = document.createElement("img");
+      imgDiv.src = i.src;
+      imgDiv.style.width = i.width;
+      imgDiv.style.height = "150px";
+      div.appendChild(imgDiv);
       //options
       div.innerHTML += `
       <button class="option-div" onclick="checker(this)">${i.options[0]}</button>
@@ -148,17 +162,17 @@ const timerDisplay = () => {
   function checker(userOption) {
     let userSolution = userOption.innerText;
     let question =
-      document.getElementsByClassName("container-mid")[questionCount];
+      document.getElementsByClassName("container-mid")[QIndex];
     let options = question.querySelectorAll(".option-div");
     //if user clicked answer == correct option stored in object
-    if (userSolution === quizArray[questionCount].correct) {
+    if (userSolution === quizData[QIndex].correct) {
       userOption.classList.add("correct");
       scoreCount++;
     } else {
       userOption.classList.add("incorrect");
       //For marking the correct option
       options.forEach((element) => {
-        if (element.innerText == quizArray[questionCount].correct) {
+        if (element.innerText == quizData[QIndex].correct) {
           element.classList.add("correct");
         }
       });
@@ -173,13 +187,13 @@ const timerDisplay = () => {
   //initial setup
   function initial() {
     quizContainer.innerHTML = "";
-    questionCount = 0;
+    QIndex = 0;
     scoreCount = 0;
     count = 11;
     clearInterval(countdown);
     timerDisplay();
     quizCreator();
-    quizDisplay(questionCount);
+    quizDisplay(QIndex);
   }
   //when user click on start button
   startButton.addEventListener("click", () => {
@@ -192,3 +206,4 @@ const timerDisplay = () => {
     startScreen.classList.remove("hide");
     displayContainer.classList.add("hide");
   };
+ 
