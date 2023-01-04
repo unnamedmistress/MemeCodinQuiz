@@ -66,8 +66,8 @@ const quizData = [
 //send scores to new page
 
   function openHighScores(){
-    window.location="/style/HighScores.html";
-    window.location.href = "/style/HighScores.html";
+    window.location="/HighScores.html";
+    window.location.href = "/HighScores.html";
 }
   //Next Button
   nextBtn.addEventListener(
