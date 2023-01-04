@@ -1,10 +1,15 @@
 let redo = document.getElementById("restar");
-let div = document.getElementsByClassName("high-scoreDiv");
-let scores = document.getElementById('high-score');
+let scores = document.getElementsByClassName("high-scoreDiv");
+var todoInput = document.querySelector("#todo-text");
+var todoForm = document.querySelector("#todo-form");
+var todoList = document.querySelector("#todo-list");
+var todoCountSpan = document.querySelector("#todo-count");
 
-redo.addEventListener("click", function openHighScores(){
-    window.location="/index.html";
-    window.location.href = "/index.html"; initial();
+var storedScores = [];
+redo.addEventListener("click", function openHighScores() {
+    window.location = "/index.html";
+    window.location.href = "/index.html";
+    initial();
     displayContainer.classList.remove("hide");
     scoreContainer.classList.add("hide");
 });
@@ -12,26 +17,87 @@ redo.addEventListener("click", function openHighScores(){
 const urlParams = new URLSearchParams(window.location.search);
 // Get the score count from the URL parameters
 const score = urlParams.get('score');
-// Display the score count on the page
-document.getElementById('high-score').innerHTML ="Your score is " + score + " out of 7"; 
+scores.innerHTML = `Your score is ${score}`;
 
-function clearTextBox() {
-    // Get the value of the text box
-    const textBoxValue = document.getElementById('t1').value;
+function renderstoredScores() {
+    // Clear todoList element and update scoreCountSpan
+    todoList.innerHTML = "";
+    todoCountSpan.textContent = storedScores.length;
 
-    // Store the text box value and score in local storage
-    localStorage.setItem('textBoxValue', textBoxValue);
-    localStorage.setItem('score', score);
+    // Render a new li for each score
+    for (var i = 0; i < storedScores.length; i++) {
+        var todo = storedScores[i];
 
-    document.getElementById('t1').value = '';
-    document.getElementById('t1').style.display = 'none';
-   
+        var li = document.createElement("li");
+        li.textContent = todo;
+        li.setAttribute("data-index", i);
+
+        var button = document.createElement("button");
+        button.textContent = ` You have a score of ${score}   ✔️`;
+
+        li.appendChild(button);
+        todoList.appendChild(li);
+    }
 }
 
-document.getElementById('t1').onsubmit = clearTextBox; 
+// This function is being called below and will run when the
+// page loads.
+function init() {
+    // Get stored storedScores from localStorage
+    var storedstoredScores = JSON.parse(localStorage.getItem("storedScores"));
+    var storedCurrent= JSON.parse(localStorage.getItem("score"));
 
-const storeScore = localStorage.getItem('score');
-const nameValue = localStorage.getItem('textBoxValue');
+    // If storedScores were retrieved from localStorage, update the storedScores array to it
+    if (storedstoredScores !== null) {
+        storedScores = storedstoredScores;
+    }
 
-// add to page
-  scores.innerHTML = `Your score is ${storeScore} out of 7. Your name is ${nameValue}`;
+    // This is a helper function that will render storedScores to the DOM
+    renderstoredScores();
+}
+
+function storestoredScores() {
+    // Stringify and set key in localStorage to storedScores array
+    localStorage.setItem("storedScores", JSON.stringify(storedScores));
+    localStorage.setItem("score", JSON.stringify(storedCurrent));
+
+}
+
+// Add submit event to form
+todoForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var todoText = todoInput.value.trim();
+
+    // Return from function early if submitted todoText is blank
+    if (todoText === "") {
+        return;
+    }
+
+    // Add new todoText to storedScores array, clear the input
+    storedScores.push(`${todoText} `);
+    todoInput.value = "";
+
+    // Store updated storedScores in localStorage, re-render the list
+    storestoredScores();
+    renderstoredScores();
+});
+
+// Add click event to todoList element
+todoList.addEventListener("click", function(event) {
+    var element = event.target;
+
+    // Checks if element is a button
+    if (element.matches("button") === true) {
+        // Get its data-index value and remove the todo element from the list
+        var index = element.parentElement.getAttribute("data-index");
+        storedScores.splice(index, 1);
+
+        // Store updated storedScores in localStorage, re-render the list
+        storestoredScores();
+        renderstoredScores();
+    }
+});
+
+// Calls init to retrieve data and render it to the page on load
+init()
