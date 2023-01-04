@@ -5,7 +5,6 @@ let nextBtn = document.getElementById("next-button");
 let countOfQuestion = document.querySelector(".number-of-question");
 let displayContainer = document.getElementById("display-container");
 let scoreContainer = document.querySelector(".score-container");
-let restart = document.getElementById("restart");
 let restar = document.getElementById("restar");
 let userScore = document.getElementById("user-score");
 let startScreen = document.querySelector(".start-screen");
@@ -64,16 +63,11 @@ const quizData = [
  ];
  
 
-//Restart 
-restart.addEventListener("click", () => {
-    initial();
-    displayContainer.classList.remove("hide");
-    scoreContainer.classList.add("hide");
-  });
+//send scores to new page
+
   function openHighScores(){
     window.location="/HighScores.html";
     window.location.href = "/HighScores.html";
-
 }
   //Next Button
   nextBtn.addEventListener(
@@ -91,6 +85,7 @@ restart.addEventListener("click", () => {
         //user score
         userScore.innerHTML =
           "Your score is " + scoreCount + " out of " + QIndex;
+          window.location.href = '/HighScores.html?score=' + scoreCount;
       } else {
         //display QIndex
         countOfQuestion.innerHTML =
@@ -206,4 +201,4 @@ const timerDisplay = () => {
     startScreen.classList.remove("hide");
     displayContainer.classList.add("hide");
   };
- 
+  
