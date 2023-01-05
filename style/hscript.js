@@ -16,8 +16,8 @@ redo.addEventListener("click", function openHighScores() {
 
 const urlParams = new URLSearchParams(window.location.search);
 // Get the score count from the URL parameters
-const score = urlParams.get('score');
-scores.innerHTML = `Your score is ${score}`;
+const score = urlParams.get('scoreCount');
+scores.innerHTML = `Your score is ${scoreCount}`;
 
 function renderstoredScores() {
     // Clear todoList element and update scoreCountSpan
@@ -33,7 +33,7 @@ function renderstoredScores() {
         li.setAttribute("data-index", i);
 
         var button = document.createElement("button");
-        button.textContent = ` You have a score of ${score}   ✔️`;
+        button.textContent = ` You have a score of ${scoreCount}   ✔️`;
 
         li.appendChild(button);
         todoList.appendChild(li);
