@@ -66,8 +66,8 @@ const quizData = [
 //send scores to new page
 
   function openHighScores(){
-    window.location="/HighScores.html";
-    window.location.href = "/HighScores.html";
+    window.location="MemeCodinQuiz/HighScores.html";
+    window.location.href = "MemeCodinQuiz/HighScores.html";
 }
   //Next Button
   nextBtn.addEventListener(
