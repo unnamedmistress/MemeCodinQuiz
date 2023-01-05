@@ -66,8 +66,8 @@ const quizData = [
 //send scores to new page
 
   function openHighScores(){
-    window.location="https://unnamedmistress.github.io/MemeCodinQuiz/HighScores.html";
-    window.location.href = "https://unnamedmistress.github.io/MemeCodinQuiz/HighScores.html";
+    window.open("https://unnamedmistress.github.io/MemeCodinQuiz/HighScores.html");
+    
 }
   //Next Button
   nextBtn.addEventListener(
@@ -85,7 +85,7 @@ const quizData = [
         //user score
         userScore.innerHTML =
           "Your score is " + scoreCount + " out of " + QIndex;
-          window.location.href = '/MemeCodinQuiz/HighScores.html?score=' + scoreCount;
+          window.open("/MemeCodinQuiz/HighScores.html?score=" + scoreCount);
       } else {
         //display QIndex
         countOfQuestion.innerHTML =
