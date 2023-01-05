@@ -85,7 +85,7 @@ const quizData = [
         //user score
         userScore.innerHTML =
           "Your score is " + scoreCount + " out of " + QIndex;
-          window.location.href = '/HighScores.html?score=' + scoreCount;
+          window.location.href = '/MemeCodinQuiz/HighScores.html?score=' + scoreCount;
       } else {
         //display QIndex
         countOfQuestion.innerHTML =
