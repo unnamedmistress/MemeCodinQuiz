@@ -7,8 +7,8 @@ var todoCountSpan = document.querySelector("#todo-count");
 
 var storedScores = [];
 redo.addEventListener("click", function openHighScores() {
-    window.location = "/index.html";
-    window.location.href = "/index.html";
+    window.location = "index.html";
+    window.location.href = "index.html";
     initial();
     displayContainer.classList.remove("hide");
     scoreContainer.classList.add("hide");
